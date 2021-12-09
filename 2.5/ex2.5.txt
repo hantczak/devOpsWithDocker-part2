@@ -1,0 +1,9 @@
+docker-compose up --scale compute=5                                                                         
+Starting load-balancer ... done
+Starting 25_compute_1  ... done
+Starting calculator    ... done
+Creating 25_compute_2  ... done
+Creating 25_compute_3  ... done
+Creating 25_compute_4  ... done
+Creating 25_compute_5  ... done
+Attaching to calculator, load-balancer, 25_compute_1, 25_compute_4, 25_compute_5, 25_compute_3, 25_compute_2

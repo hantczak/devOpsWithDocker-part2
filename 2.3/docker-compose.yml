@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+ backend:
+  build: ./dockerfile-backend
+  container_name: compose-example-backend
+  ports:
+   - 8080:8080
+   
+ frontend:
+  build: ./dockerfile-frontend
+  container_name: compose-example-frontend
+  ports:
+   - 5000:5000
+  

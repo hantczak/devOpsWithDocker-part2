@@ -1,0 +1,61 @@
+version: '3.5'
+
+services:
+ postgresdb:
+  image: postgres:13.2-alpine
+  restart: unless-stopped
+  environment:
+   POSTGRES_USER: user
+   POSTGRES_PASSWORD: admin
+   POSTGRES_DB: database
+  container_name: postgresdb
+  networks:
+   - app-network
+  volumes:
+   - ./postgres-db:/var/lib/postgresql/data
+
+ redisdb:
+  image: redis:latest
+  container_name: redisdb
+  networks:
+   - app-network
+  volumes:
+   - ./redis-db:/data
+   
+
+ backend:
+  build: ./dockerfile-backend
+  container_name: compose-example-backend
+  environment:
+   REDIS_HOST: redisdb
+   POSTGRES_HOST: postgresdb
+   POSTGRES_USER: user
+   POSTGRES_PASSWORD: admin
+   POSTGRES_DATABASE: database
+  ports:
+   - 8080:8080
+  depends_on: 
+   - postgresdb
+   - redisdb
+  expose:
+   - "8080"
+  networks:
+   - app-network
+   
+ frontend:
+  build: ./dockerfile-frontend
+  container_name: compose-example-frontend
+  ports:
+   - 5000:5000
+  expose:
+   - "5000"
+  networks:
+   - app-network
+ 
+networks: 
+ app-network:
+
+volumes:
+ redis-db:
+ postgres-db:
+  
